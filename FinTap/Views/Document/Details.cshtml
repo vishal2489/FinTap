@@ -1,0 +1,51 @@
+﻿@model FinTap.Models.UserDocumentDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserDocumentDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PanCardPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PanCardPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressProofPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressProofPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotoPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotoPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SignaturePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SignaturePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

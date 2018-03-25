@@ -196,6 +196,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\PersonalDetailsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UserTaxDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,6 +219,15 @@
       <DependentUpon>FinDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>FinDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDocumentDetail.cs">
+      <DependentUpon>FinDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserPersonalDetail.cs">
+      <DependentUpon>FinDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserTaxDetail.cs">
       <DependentUpon>FinDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,10 +287,29 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Document\Create.cshtml" />
+    <Content Include="Views\Document\Delete.cshtml" />
+    <Content Include="Views\Document\Details.cshtml" />
+    <Content Include="Views\Document\Edit.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
+    <Content Include="Views\PersonalDetails\Create.cshtml" />
+    <Content Include="Views\PersonalDetails\Delete.cshtml" />
+    <Content Include="Views\PersonalDetails\Details.cshtml" />
+    <Content Include="Views\PersonalDetails\Edit.cshtml" />
+    <Content Include="Views\PersonalDetails\Index.cshtml" />
+    <Content Include="Views\UserTaxDetails\Create.cshtml" />
+    <Content Include="Views\UserTaxDetails\Delete.cshtml" />
+    <Content Include="Views\UserTaxDetails\Details.cshtml" />
+    <Content Include="Views\UserTaxDetails\Edit.cshtml" />
+    <Content Include="Views\UserTaxDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

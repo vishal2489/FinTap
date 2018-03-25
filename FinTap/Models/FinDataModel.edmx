@@ -4,88 +4,288 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FinDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FinDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaxDetailsId" Type="int" />
+          <Property Name="PersonalDetailsId" Type="int" />
+          <Property Name="DocumentDetailsId" Type="int" />
           <Property Name="EmailId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" />
-          <Property Name="Gender" Type="char" MaxLength="1" />
-          <Property Name="DateOfBirth" Type="date" />
-          <Property Name="FatherOrSpouseName" Type="varbinary" MaxLength="80" />
-          <Property Name="MotherName" Type="varbinary" MaxLength="80" />
-          <Property Name="Address" Type="varchar" MaxLength="500" />
-          <Property Name="PinCode" Type="varchar" MaxLength="6" />
-          <Property Name="MaritalStatus" Type="char" MaxLength="1" />
-          <Property Name="CitizenShip" Type="varchar" MaxLength="15" />
-          <Property Name="ResidentialStatus" Type="char" MaxLength="1" />
-          <Property Name="Occupation" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="UserDocumentDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PanCardPath" Type="varchar" MaxLength="400" />
+          <Property Name="AddressProofPath" Type="varchar" MaxLength="400" />
+          <Property Name="PhotoPath" Type="varchar" MaxLength="400" />
+          <Property Name="SignaturePath" Type="varchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="UserPersonalDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="FatherOrSpouseName" Type="varbinary" MaxLength="80" Nullable="false" />
+          <Property Name="MotherName" Type="varbinary" MaxLength="80" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PinCode" Type="varchar" MaxLength="6" />
+          <Property Name="MaritalStatus" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CitizenShip" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ResidentialStatus" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Occupation" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IsActive" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTaxDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PAN" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IsKYCDone" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__User__DocumentDe__3E52440B">
+          <End Role="UserDocumentDetails" Type="Self.UserDocumentDetails" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDocumentDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="DocumentDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__PersonalDe__3D5E1FD2">
+          <End Role="UserPersonalDetails" Type="Self.UserPersonalDetails" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPersonalDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PersonalDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__TaxDetails__3C69FB99">
+          <End Role="UserTaxDetails" Type="Self.UserTaxDetails" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTaxDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="TaxDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FinDbModelStoreContainer">
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDocumentDetails" EntityType="Self.UserDocumentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPersonalDetails" EntityType="Self.UserPersonalDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTaxDetails" EntityType="Self.UserTaxDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__User__DocumentDe__3E52440B" Association="Self.FK__User__DocumentDe__3E52440B">
+            <End Role="UserDocumentDetails" EntitySet="UserDocumentDetails" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__PersonalDe__3D5E1FD2" Association="Self.FK__User__PersonalDe__3D5E1FD2">
+            <End Role="UserPersonalDetails" EntitySet="UserPersonalDetails" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__TaxDetails__3C69FB99" Association="Self.FK__User__TaxDetails__3C69FB99">
+            <End Role="UserTaxDetails" EntitySet="UserTaxDetails" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FinDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FinDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserDocumentDetails" EntityType="FinDbModel.UserDocumentDetail" />
+          <EntitySet Name="UserPersonalDetails" EntityType="FinDbModel.UserPersonalDetail" />
+          <EntitySet Name="UserTaxDetails" EntityType="FinDbModel.UserTaxDetail" />
+          <EntitySet Name="Users" EntityType="FinDbModel.User" />
+          <AssociationSet Name="FK__User__DocumentDe__3E52440B" Association="FinDbModel.FK__User__DocumentDe__3E52440B">
+            <End Role="UserDocumentDetail" EntitySet="UserDocumentDetails" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__PersonalDe__3D5E1FD2" Association="FinDbModel.FK__User__PersonalDe__3D5E1FD2">
+            <End Role="UserPersonalDetail" EntitySet="UserPersonalDetails" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__TaxDetails__3C69FB99" Association="FinDbModel.FK__User__TaxDetails__3C69FB99">
+            <End Role="UserTaxDetail" EntitySet="UserTaxDetails" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="UserDocumentDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PanCardPath" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="AddressProofPath" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="PhotoPath" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="SignaturePath" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="FinDbModel.FK__User__DocumentDe__3E52440B" FromRole="UserDocumentDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserPersonalDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FatherOrSpouseName" Type="Binary" Nullable="false" MaxLength="80" FixedLength="false" />
+          <Property Name="MotherName" Type="Binary" Nullable="false" MaxLength="80" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="MaritalStatus" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CitizenShip" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialStatus" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Occupation" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="FinDbModel.FK__User__PersonalDe__3D5E1FD2" FromRole="UserPersonalDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserTaxDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PAN" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IsKYCDone" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="FinDbModel.FK__User__TaxDetails__3C69FB99" FromRole="UserTaxDetail" ToRole="User" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MobileNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="FatherOrSpouseName" Type="Binary" MaxLength="80" FixedLength="false" />
-          <Property Name="MotherName" Type="Binary" MaxLength="80" FixedLength="false" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="MaritalStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CitizenShip" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ResidentialStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Occupation" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TaxDetailsId" Type="Int32" />
+          <Property Name="PersonalDetailsId" Type="Int32" />
+          <Property Name="DocumentDetailsId" Type="Int32" />
+          <Property Name="EmailId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserDocumentDetail" Relationship="FinDbModel.FK__User__DocumentDe__3E52440B" FromRole="User" ToRole="UserDocumentDetail" />
+          <NavigationProperty Name="UserPersonalDetail" Relationship="FinDbModel.FK__User__PersonalDe__3D5E1FD2" FromRole="User" ToRole="UserPersonalDetail" />
+          <NavigationProperty Name="UserTaxDetail" Relationship="FinDbModel.FK__User__TaxDetails__3C69FB99" FromRole="User" ToRole="UserTaxDetail" />
         </EntityType>
-        <EntityContainer Name="FinDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.User" />
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK__User__DocumentDe__3E52440B">
+          <End Type="FinDbModel.UserDocumentDetail" Role="UserDocumentDetail" Multiplicity="0..1" />
+          <End Type="FinDbModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDocumentDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="DocumentDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__PersonalDe__3D5E1FD2">
+          <End Type="FinDbModel.UserPersonalDetail" Role="UserPersonalDetail" Multiplicity="0..1" />
+          <End Type="FinDbModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPersonalDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PersonalDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__TaxDetails__3C69FB99">
+          <End Type="FinDbModel.UserTaxDetail" Role="UserTaxDetail" Multiplicity="0..1" />
+          <End Type="FinDbModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTaxDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="TaxDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FinDbModelStoreContainer" CdmEntityContainer="FinDbEntities">
+          <EntitySetMapping Name="UserDocumentDetails">
+            <EntityTypeMapping TypeName="FinDbModel.UserDocumentDetail">
+              <MappingFragment StoreEntitySet="UserDocumentDetails">
+                <ScalarProperty Name="SignaturePath" ColumnName="SignaturePath" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="AddressProofPath" ColumnName="AddressProofPath" />
+                <ScalarProperty Name="PanCardPath" ColumnName="PanCardPath" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPersonalDetails">
+            <EntityTypeMapping TypeName="FinDbModel.UserPersonalDetail">
+              <MappingFragment StoreEntitySet="UserPersonalDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="ResidentialStatus" ColumnName="ResidentialStatus" />
+                <ScalarProperty Name="CitizenShip" ColumnName="CitizenShip" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherOrSpouseName" ColumnName="FatherOrSpouseName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTaxDetails">
+            <EntityTypeMapping TypeName="FinDbModel.UserTaxDetail">
+              <MappingFragment StoreEntitySet="UserTaxDetails">
+                <ScalarProperty Name="IsKYCDone" ColumnName="IsKYCDone" />
+                <ScalarProperty Name="PAN" ColumnName="PAN" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FinDbModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="FatherOrSpouseName" ColumnName="FatherOrSpouseName" />
-                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="CitizenShip" ColumnName="CitizenShip" />
-                <ScalarProperty Name="ResidentialStatus" ColumnName="ResidentialStatus" />
-                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="DocumentDetailsId" ColumnName="DocumentDetailsId" />
+                <ScalarProperty Name="PersonalDetailsId" ColumnName="PersonalDetailsId" />
+                <ScalarProperty Name="TaxDetailsId" ColumnName="TaxDetailsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

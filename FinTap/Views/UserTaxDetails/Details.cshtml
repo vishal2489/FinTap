@@ -1,0 +1,35 @@
+﻿@model FinTap.Models.UserTaxDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserTaxDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsKYCDone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsKYCDone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

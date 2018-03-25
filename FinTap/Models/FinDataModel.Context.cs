@@ -25,6 +25,9 @@ namespace FinTap.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<UserDocumentDetail> UserDocumentDetails { get; set; }
+        public virtual DbSet<UserPersonalDetail> UserPersonalDetails { get; set; }
+        public virtual DbSet<UserTaxDetail> UserTaxDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

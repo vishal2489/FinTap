@@ -12,18 +12,19 @@ namespace FinTap.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class UserTaxDetail
     {
-        public int Id { get; set; }
-        public Nullable<int> TaxDetailsId { get; set; }
-        public Nullable<int> PersonalDetailsId { get; set; }
-        public Nullable<int> DocumentDetailsId { get; set; }
-        public string EmailId { get; set; }
-        public string MobileNumber { get; set; }
-        public string Password { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserTaxDetail()
+        {
+            this.Users = new HashSet<User>();
+        }
     
-        public virtual UserDocumentDetail UserDocumentDetail { get; set; }
-        public virtual UserPersonalDetail UserPersonalDetail { get; set; }
-        public virtual UserTaxDetail UserTaxDetail { get; set; }
+        public int Id { get; set; }
+        public string PAN { get; set; }
+        public string IsKYCDone { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -5,7 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6e8cabcf84344343bebd5f3a39249fe0" Name="Diagram1">
-        <EntityTypeShape EntityType="FinDbModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinDbModel.UserDocumentDetail" Width="1.5" PointX="0.75" PointY="10.5" />
+        <EntityTypeShape EntityType="FinDbModel.UserPersonalDetail" Width="1.5" PointX="0.75" PointY="13.375" />
+        <EntityTypeShape EntityType="FinDbModel.UserTaxDetail" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="FinDbModel.User" Width="1.5" PointX="3" PointY="11.375" />
+        <AssociationConnector Association="FinDbModel.FK__User__DocumentDe__3E52440B" />
+        <AssociationConnector Association="FinDbModel.FK__User__PersonalDe__3D5E1FD2" />
+        <AssociationConnector Association="FinDbModel.FK__User__TaxDetails__3C69FB99" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
